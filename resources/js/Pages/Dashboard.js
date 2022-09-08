@@ -49,10 +49,9 @@ const OderContainer = () => {
             <div className="flex flex-col space-y-3 space-x-2 py-2">
                 {
                     todayMenu.length > 0 ? categories.map((cat,index)=>(
-                        <Category key={index} />
+                        <Category key={index} menu={todayMenu[0]} category={cat}/>
                     )) : <EmptyMenu />
                 }
-                {/* <Category menu={todayMenu}/> */}
             </div>
         </div>
     )
@@ -64,12 +63,18 @@ const EmptyMenu = () => {
     );
 }
  
-const Category = ({menu,categories}) => {
+const Category = ({menu,category}) => {
+    const foods = menu.filter(food=>food.category === category)
     return ( 
-        <div className="flex flex-wrap border-b-2 border-separate border-red-300">
-            <div className="flex">categorised list</div>
-            <div className="flex">categorised list</div>
-            <div className="flex">categorised list</div>
+        <div className="flex flex-col">
+            <h3 className='capitalize'>{category}</h3>
+            <div className="flex flex-wrap space-x-3">
+                {
+                   foods && foods?.map((food,index)=>(
+                        <Food name={food.name} key={index} />
+                   ))  
+                }
+            </div>
         </div>
      );
 }
@@ -78,7 +83,7 @@ const Category = ({menu,categories}) => {
 const Food = ({name}) => {
     return ( 
         <div className='border-2 border-purple-600 rounded-xl px-2 py-1'>
-            Despacito
+            { name }
         </div>  
      );
 }
@@ -184,6 +189,14 @@ const getTodayMenu = (day) => {
                 {
                     name: "Samaki",
                     category: "secondary"
+                },
+                {
+                    name: "Maharage",
+                    category: "optional"
+                },
+                {
+                    name: "Vegetables",
+                    category: "optional"
                 },
             ],
         },
